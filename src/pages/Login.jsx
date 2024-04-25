@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 
 
@@ -7,10 +8,22 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+  const { user, LogIn } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Submitted Email: ", email);
-    console.log("Submitted Password: ", password);
+
+    try {
+
+      await LogIn(email, password)
+      navigate('/')
+
+    } catch (error) {
+      console.log('auth failed:', error)
+
+    }
+
   };
 
   return (
@@ -65,12 +78,12 @@ const Login = () => {
             </button>
           </div>
         </form>
-          <p className="mt-10 text-center text-sm text-gray-500">
+        <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{' '}
-            <Link to='/signup' className="text-teal-600 hover:text-teal-800">
-             sign up
-            </Link>
-          </p>
+          <Link to='/signup' className="text-teal-600 hover:text-teal-800">
+            sign up
+          </Link>
+        </p>
       </div>
     </div>
   );

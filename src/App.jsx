@@ -7,20 +7,31 @@ import Signup from './pages/SignUp'
 import ProductDetail from './pages/ProductDetail'
 import SellProduct from './pages/SellProudct'
 import Footer from './components/Footer'
-
+import { AuthContextProvider } from './context/AuthContext'
+import ProtectedRoutes from './components/ProtectedRoutes'
 function App() {
 
   return (
     <>
-      <NavBar />
-      <Routes >
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/login' element={< Login />}></Route>
-        <Route path='/signup' element={<Signup />}></Route>
-        <Route path='/productDetail' element={<ProductDetail />}></Route>
-        <Route path='/sellProduct' element={<SellProduct />}></Route>
-      </Routes>
-      <Footer/>
+      <AuthContextProvider >
+
+        <NavBar />
+        <Routes >
+          <Route path='/' element={<Home />}></Route>
+          <Route path='/login' element={< Login />}></Route>
+          <Route path='/signup' element={<Signup />}></Route>
+          <Route path='/productDetail' element={<ProductDetail />}></Route>
+          <Route
+            path='/sellProduct'
+            element={
+              <ProtectedRoutes >
+                <SellProduct />
+              </ProtectedRoutes>
+            }
+          ></Route>
+        </Routes>
+        <Footer />
+      </AuthContextProvider >
     </>
   )
 }

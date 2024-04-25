@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
+
+  const { user, SignUp } = useAuth()
+  const navigagte = useNavigate()
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Correct usage of alerts with template literals
-    alert(`Submitted Email: ${email}`);
-    alert(`Submitted Password: ${password}`);
-    alert(`Submitted Mobile: ${mobileNumber}`);
+    try{
+      await SignUp(email,password)
+      navigagte('/')
+    }catch(eror){
+      console.log('error found',eror)
+    }
+   
   };
 
   return (
@@ -86,4 +94,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

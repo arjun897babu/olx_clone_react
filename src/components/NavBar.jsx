@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { OlxLogo } from "../assets/svg";
 import { IoMdSearch, IoIosArrowDown } from "react-icons/io";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from "../context/AuthContext";
 
 
 const NavBar = () => {
+  const { user, LogOut } = useAuth()
+  const navigagte = useNavigate()
+
+  const handleLogOut = async () => {
+    try {
+      await LogOut();
+      navigagte('/')
+    } catch (error) {
+      console.log('error logout:', error)
+    }
+  }
+
   return (
     <div className="flex flex-wrap p-4 bg-gray-100 items-center justify-between">
       <div className="flex-grow sm:flex sm:items-center sm:w-auto">
@@ -42,18 +55,27 @@ const NavBar = () => {
         <h1 className="uppercase text-sm font-bold mr-2">english</h1>
         <IoIosArrowDown size={30} />
       </div>
+    {
+      user?.email? (<Link to='/' >
+      <button onClick={handleLogOut} className="underline hover:no-underline capitalize text-lg font-bold p-2">
+        log out
+      </button>
+    </Link > ):(<Link to='/login' >
+      <button className="underline hover:no-underline capitalize text-lg font-bold p-2">
+        login
+      </button>
+    </Link >)
+    }
 
-      <Link to='/login' >
-        <button className="underline hover:no-underline capitalize text-lg font-bold p-2">
-          login
-        </button>
-      </Link >
+
+
+
       <Link to='/sellProduct'>
         <button className="ml-6 px-5 py-2 border-8 rounded-full border-t-yellow-300 border-b-blue-700 border-r-sky-500">
           + SELL
         </button>
       </Link >
-    </div>
+    </div >
   );
 }
 

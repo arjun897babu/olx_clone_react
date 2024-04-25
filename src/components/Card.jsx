@@ -5,6 +5,7 @@ import { HiLightningBolt } from 'react-icons/hi'
 
 
 const Card = ({ imageUrl = "https://imgd.aeplcdn.com/664x374/bikewaleimg/ec/1320/img/l/hero-impulse-side-7656.jpg?v=201711021421&q=80", price = "₹ 222,222", title = "Impulse", description = "Description of the product." }) => {
+  
   return (
     <div className="lg:w-1/4 pr-5 mb-3 relative">
       <div className="border border-gray-200 bg-white shadow-2xl hover:shadow-orange-100 rounded cursor-pointer">
