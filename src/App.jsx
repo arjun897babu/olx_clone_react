@@ -9,12 +9,13 @@ import SellProduct from './pages/SellProudct'
 import Footer from './components/Footer'
 import { AuthContextProvider } from './context/AuthContext'
 import ProtectedRoutes from './components/ProtectedRoutes'
+import MyAds from './pages/MyAds'
+import Favourite from './pages/Favourite'
 function App() {
 
   return (
     <>
       <AuthContextProvider >
-
         <NavBar />
         <Routes >
           <Route path='/' element={<Home />}></Route>
@@ -26,6 +27,22 @@ function App() {
             element={
               <ProtectedRoutes >
                 <SellProduct />
+              </ProtectedRoutes>
+            }
+          ></Route>
+          <Route
+            path='/myads'
+            element={
+              <ProtectedRoutes >
+                <MyAds />
+              </ProtectedRoutes>
+            }
+          ></Route>
+          <Route
+            path='/favorite'
+            element={
+              <ProtectedRoutes >
+                <Favourite />
               </ProtectedRoutes>
             }
           ></Route>

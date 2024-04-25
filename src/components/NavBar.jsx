@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { OlxLogo } from "../assets/svg";
-import { IoMdSearch, IoIosArrowDown } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from "../context/AuthContext";
 
+import { OlxLogo } from "../assets/svg";
+import { IoMdSearch, IoIosArrowDown, IoIosHeartEmpty } from "react-icons/io"
+import { RiLogoutBoxLine } from "react-icons/ri"
 
-const NavBar = () => {
+const DropdownMenu = () => {
   const { user, LogOut } = useAuth()
   const navigagte = useNavigate()
 
@@ -17,6 +18,45 @@ const NavBar = () => {
       console.log('error logout:', error)
     }
   }
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  return (
+    <div className="relative">
+      <button
+        className="flex items-center justify-center w-10 h-10 bg-cyan-600 rounded-full focus:outline-none  "
+        type="button"
+        onClick={toggleDropdown}
+      >
+        <span className="w-full h-full rounded-full uppercase flex justify-center items-center" alt="user logo" >a</span>
+      </button>
+
+      {/* Dropdown menu */}
+      <div id="dropdownAvatar"
+        className={`absolute right-0 mt-2 py-1 w-48 bg-white rounded-md shadow-lg z-50 ${isOpen ? 'block' : 'hidden'}`}
+        style={{ minWidth: '12rem' }}>
+        <ul className="py-1" >
+          <Link to='/myads'>
+            <li className=" px-4 py-2  hover:bg-gray-100 text-lg flex items-center ">
+              <span className="mr-3"><IoIosHeartEmpty /></span> My ads
+            </li>
+          </Link>
+          <li
+            onClick={handleLogOut}
+            className=" flex items-center px-4 py-2 text-lg  hover:bg-gray-100" >
+            <span className="mr-3"><RiLogoutBoxLine /></span>
+            Log out
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+
+const NavBar = () => {
+  const { user } = useAuth()
+
 
   return (
     <div className="flex flex-wrap p-4 bg-gray-100 items-center justify-between">
@@ -55,20 +95,13 @@ const NavBar = () => {
         <h1 className="uppercase text-sm font-bold mr-2">english</h1>
         <IoIosArrowDown size={30} />
       </div>
-    {
-      user?.email? (<Link to='/' >
-      <button onClick={handleLogOut} className="underline hover:no-underline capitalize text-lg font-bold p-2">
-        log out
-      </button>
-    </Link > ):(<Link to='/login' >
-      <button className="underline hover:no-underline capitalize text-lg font-bold p-2">
-        login
-      </button>
-    </Link >)
-    }
-
-
-
+      {
+        user?.email ? (<DropdownMenu />) : (<Link to='/login' >
+          <button className="underline hover:no-underline capitalize text-lg font-bold p-2">
+            login
+          </button>
+        </Link >)
+      }
 
       <Link to='/sellProduct'>
         <button className="ml-6 px-5 py-2 border-8 rounded-full border-t-yellow-300 border-b-blue-700 border-r-sky-500">

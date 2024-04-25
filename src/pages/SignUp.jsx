@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +32,21 @@ const SignUp = () => {
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
+        <div>
+            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+             Name
+            </label>
+            <input
+              id="userName"
+              name="userName"
+              type="text"
+              autoComplete="userName"
+              required
+              className="p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none sm:text-sm"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
@@ -90,6 +106,9 @@ const SignUp = () => {
           </Link>
         </p>
       </div>
+
+
+      
     </div>
   );
 };
