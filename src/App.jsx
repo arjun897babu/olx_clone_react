@@ -11,6 +11,7 @@ import { AuthContextProvider } from './context/AuthContext'
 import ProtectedRoutes from './components/ProtectedRoutes'
 import MyAds from './pages/MyAds'
 import Favourite from './pages/Favourite'
+import { ImageProvider } from './context/ImageUploadContext'
 function App() {
 
   return (
@@ -26,7 +27,9 @@ function App() {
             path='/sellProduct'
             element={
               <ProtectedRoutes >
-                <SellProduct />
+                <ImageProvider>
+                  <SellProduct />
+                </ImageProvider>
               </ProtectedRoutes>
             }
           ></Route>
