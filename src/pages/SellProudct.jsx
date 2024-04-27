@@ -7,7 +7,7 @@ import { useImageUpload } from "../context/ImageUploadContext";
 
 const SellProduct = () => {
   const [itemName, setItemName] = useState('');
-  const [category, setCategory] = useState('');
+  const [year, setYear] = useState('');
   const [location, setLocation] = useState('');
   const [price, setPrice] = useState('');
   const [image, setImage] = useState(null)
@@ -30,14 +30,15 @@ const SellProduct = () => {
     try {
       const docRef = await addDoc(collection(db, 'products'), {
         itemName,
-        category,
+        year,
         price,
         location,
         url,
         userId: user.uid,
+        email:user.email,
         createdAt: new Date().toISOString() 
       });
-      console.log(docRef); 
+       
       alert('Product Added');
       setIsLoading(false);
       navigate('/myads')
@@ -60,8 +61,8 @@ const SellProduct = () => {
           <input type="text" id="itemName" name="itemName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" onChange={(e) => setItemName(e.target.value)} />
         </div>
         <div className="mb-6">
-          <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900">Category</label>
-          <input type="text" id="category" name="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" onChange={(e) => setCategory(e.target.value)} />
+          <label htmlFor="year" className="block mb-2 text-sm font-medium text-gray-900">year</label>
+          <input type="text" id="year" name="year" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" onChange={(e) => setYear(e.target.value)} />
         </div>
         <div className="mb-6">
           <label htmlFor="location" className="block mb-2 text-sm font-medium text-gray-900">Location</label>

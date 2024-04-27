@@ -42,7 +42,7 @@ function App() {
             }
           ></Route>
           <Route
-            path='/favorite'
+            path='/favourite'
             element={
               <ProtectedRoutes >
                 <Favourite />

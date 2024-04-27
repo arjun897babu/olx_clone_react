@@ -20,6 +20,7 @@ const DropdownMenu = () => {
   }
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const firstTwoLetters = user?.email.substring(0, 2).toUpperCase();
 
   return (
     <div className="relative">
@@ -28,7 +29,7 @@ const DropdownMenu = () => {
         type="button"
         onClick={toggleDropdown}
       >
-        <span className="w-full h-full rounded-full uppercase flex justify-center items-center" alt="user logo" >a</span>
+        <span className="w-full h-full rounded-full uppercase flex justify-center items-center" alt="user logo" >{firstTwoLetters}</span>
       </button>
 
       {/* Dropdown menu */}
