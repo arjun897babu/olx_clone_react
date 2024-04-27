@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useAuth } from "../context/AuthContext";
 import { arrayUnion, doc, updateDoc, arrayRemove, deleteDoc } from "firebase/firestore";
 
@@ -13,10 +12,16 @@ import { BiHeart } from 'react-icons/bi'
 
 import { IoIosHeart } from "react-icons/io";
 import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { UseItem } from "../context/ItemContexProvier";
+
 const Card = ({ item, page }) => {
 
   const [like, setLike] = useState(true);
   const { user } = useAuth()
+  const {setItem} = UseItem()
+ 
+  const navigate = useNavigate();
 
   const makefavourite = async () => {
     const userEmail = user?.email
@@ -53,14 +58,19 @@ const Card = ({ item, page }) => {
   const removeAd = async (id) => {
     try {
       await deleteDoc(doc(db, 'products', id));
-      toastMessage('success','Your ad is removed')
+      toastMessage('success', 'Your ad is removed')
     } catch (error) {
       console.log(error)
     }
   }
 
+  const handleCardClick = () => {
+    setItem(item);
+    navigate('/productDetail');
+  }
+
   return (
-    <div className="lg:w-1/4 pr-5 mb-3 relative">
+    <div className="lg:w-1/4 pr-5 mb-3 relative" onClick={handleCardClick}>
       <div className="border border-gray-200 bg-white shadow-2xl hover:shadow-orange-100 rounded cursor-pointer">
         <div className="h-52 overflow-hidden p-4">
           <img src={item.url} alt={item.itemName} className="w-full h-full object-contain mt-6" />
@@ -97,6 +107,7 @@ const Card = ({ item, page }) => {
           Featured
         </div>
       </div>
+
     </div>
   );
 };

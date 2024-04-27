@@ -12,45 +12,54 @@ import ProtectedRoutes from './components/ProtectedRoutes'
 import MyAds from './pages/MyAds'
 import Favourite from './pages/Favourite'
 import { ImageProvider } from './context/ImageUploadContext'
+import { ItemContextProvider } from './context/ItemContexProvier'
 function App() {
 
   return (
     <>
       <AuthContextProvider >
-        <NavBar />
-        <Routes >
-          <Route path='/' element={<Home />}></Route>
-          <Route path='/login' element={< Login />}></Route>
-          <Route path='/signup' element={<Signup />}></Route>
-          <Route path='/productDetail' element={<ProductDetail />}></Route>
-          <Route
-            path='/sellProduct'
-            element={
-              <ProtectedRoutes >
-                <ImageProvider>
-                  <SellProduct />
-                </ImageProvider>
-              </ProtectedRoutes>
-            }
-          ></Route>
-          <Route
-            path='/myads'
-            element={
-              <ProtectedRoutes >
-                <MyAds />
-              </ProtectedRoutes>
-            }
-          ></Route>
-          <Route
-            path='/favourite'
-            element={
-              <ProtectedRoutes >
-                <Favourite />
-              </ProtectedRoutes>
-            }
-          ></Route>
-        </Routes>
-        <Footer />
+        < ItemContextProvider >
+          <NavBar />
+          <Routes >
+            <Route path='/' element={<Home />}></Route>
+            <Route path='/login' element={< Login />}></Route>
+            <Route path='/signup' element={<Signup />}></Route>
+            <Route
+              path='/productDetail'
+              element={
+
+                <ProductDetail />
+              }
+            ></Route>
+            <Route
+              path='/sellProduct'
+              element={
+                <ProtectedRoutes >
+                  <ImageProvider>
+                    <SellProduct />
+                  </ImageProvider>
+                </ProtectedRoutes>
+              }
+            ></Route>
+            <Route
+              path='/myads'
+              element={
+                <ProtectedRoutes >
+                  <MyAds />
+                </ProtectedRoutes>
+              }
+            ></Route>
+            <Route
+              path='/favourite'
+              element={
+                <ProtectedRoutes >
+                  <Favourite />
+                </ProtectedRoutes>
+              }
+            ></Route>
+          </Routes>
+          <Footer />
+        </ItemContextProvider>
       </AuthContextProvider >
     </>
   )
