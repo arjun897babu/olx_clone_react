@@ -23,7 +23,8 @@ const Card = ({ item, page }) => {
  
   const navigate = useNavigate();
 
-  const makefavourite = async () => {
+  const makefavourite = async (e) => {
+    e.stopPropagation(); 
     const userEmail = user?.email
     if (!userEmail) {
       toastMessage('error', 'Log in to access the services..')
@@ -43,7 +44,8 @@ const Card = ({ item, page }) => {
     }
   }
 
-  const unlistfavourite = async (myad) => {
+  const unlistfavourite = async (e,myad) => {
+    e.stopPropagation(); 
     try {
       const userDoc = doc(db, 'users', user.email);
       await updateDoc(userDoc, {
@@ -55,7 +57,8 @@ const Card = ({ item, page }) => {
     }
   }
 
-  const removeAd = async (id) => {
+  const removeAd = async (e,id) => {
+    e.stopPropagation(); 
     try {
       await deleteDoc(doc(db, 'products', id));
       toastMessage('success', 'Your ad is removed')
@@ -89,13 +92,13 @@ const Card = ({ item, page }) => {
           </p>
 
           <div className="bg-white w-fit p-2 rounded-full absolute top-2 right-8 shadow-md">
-            {page == 'home' ? (<p onClick={makefavourite}>
+            {page == 'home' ? (<p onClick={(e)=>makefavourite(e)}>
               {
                 !like && user ? (< IoIosHeart className="text-2xl" />) : (< BiHeart className="text-2xl" />)
               }
 
-            </p>) : (<p onClick={() => {
-              page === 'myads' ? removeAd(item.id) : unlistfavourite(item);
+            </p>) : (<p onClick={(e) => {
+              page === 'myads' ? removeAd(e,item.id) : unlistfavourite(e,item);
             }}>
               <AiOutlineClose className="text-xl" />
             </p>

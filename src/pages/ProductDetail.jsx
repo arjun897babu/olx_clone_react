@@ -1,32 +1,69 @@
 import React from "react";
 import { UseItem } from "../context/ItemContexProvier";
+import { FaShareAlt, FaRegHeart } from "react-icons/fa";
 
-const ProductDetail = ()=>{
-  const {item} = UseItem();
-  return (
-    <div className='relative top-16 left-0 container mx-auto h-screen bg-gray'>
+const ProductDetail = () => {
+    const { item } = UseItem();
 
-        <img className='p-5 mx-auto object-cover h-80' src='https://www.milton.in/cdn/shop/files/Flip_Lid_1000_4_1800x1800.jpg?v=1701342143' alt="" />
-        <div className='grid grid-cols-5 gap-5 text-black'>
-            <div className='col-span-2 p-5 bg-gray-50 rounded-lg my-6 text-black'>
+    return (
+        <>
+            <div className="bg-gray-100 m-5 p-5 flex gap-5">
 
-                <h1 className='text-4xl font-bold'>{item.name}</h1>
-                <h2>home applience</h2>
-                <p>{item.location}</p>
-                <p>24-04-2024</p>
+                <div className="flex-1">
+                    <div className="p-6 border bg-white border-black rounded-md flex items-center justify-center">
+                        <img src={item?.url} alt={item?.itemName} className="h-80 object-cover" />
+                    </div>
+                    <div className="mt-0.5 bg-white p-3 rounded-md border border-black">
+                        <h1 className="ml-2 capitalize font-semibold text-2xl">Details</h1>
+                        <ul className="list-none mt-2 text-slate-600">
+                            <li className="flex">
+                                <span className="font-semibold w-40">Name</span>
+                                <span>{item?.itemName}</span>
+                            </li>
+                            <li className="flex">
+                                <span className="font-semibold w-40">Year</span>
+                                <span>{item?.year}</span>
+                            </li>
+                            <li className="flex">
+                                <span className="font-semibold w-40">Price</span>
+                                <span>{item?.price}</span>
+                            </li>
+                            <li className="flex">
+                                <span className="font-semibold w-40">Posted on</span>
+                                <span>{item?.createdAt && new Date(item.createdAt).toLocaleDateString('en-GB')}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="w-1/3 h-40 bg-white p-6 rounded-lg shadow">
+                    <div className="flex justify-between">
+                        <span className="text-4xl font-semibold mr-4">₹{item?.price}</span>
+                        <div>
+                            <button
+                                title="Share"
+                                className="p-2 mr-4 rounded-full text-3xl bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                            >
+                                <FaShareAlt />
+                            </button>
+                            <button
+                                title="Favourite"
+                                className="p-2 rounded-full text-3xl bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                            >
+                                <FaRegHeart />
+                            </button>
+                        </div>
+                    </div>
+                    <p className=" mt-2 tex-sm font-thin">{item?.email}</p>
+                    <div className=" mt-2 flex justify-between">
+                        <p className=" tex-sm font-thin">{item?.location}</p>
+                        <p className=" tex-sm font-thin">{item?.createdAt && new Date(item.createdAt).toLocaleDateString('en-GB')}</p>
+                    </div>
+                </div>
             </div>
-            <div className='col-span-2 p-5 bg-gray-50 rounded-lg my-6'>
-                <p className='text-xl underline mb-1'>Seller Details:</p>
-                <h1 className='text-lg'>Seller name : {item.email}</h1>
-                <h1>894342889</h1>
-            </div>
-            <div className='col-span-1 p-5 bg-gray-50 rounded-lg my-6' >
-                <h1 className='text-4xl font-bold text-center py-5'>₹ 332</h1>
-                <button className='bg-green-950 text-white w-full rounded-lg font-semibold py-3'>Buy Product</button>
-            </div>
-        </div>
-    </div>
-)
+                      
+        </>
+    );
 }
 
-export default ProductDetail
+export default ProductDetail;
