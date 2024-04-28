@@ -32,7 +32,7 @@ const MyAds = () => {
   }, [user ]);
 
   const myAdsList = myads.map(ads=>(<Card key={ads.id} item={ads} page={'myads'} />))
-  console.log(myAdsList)
+   
 
   return (
     <>

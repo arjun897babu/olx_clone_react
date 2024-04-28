@@ -11,8 +11,7 @@ export const ImageProvider = ({ children }) => {
     const storageRef = ref(storage, `images/${Date.now()}`);
     try {
       const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      console.log(downloadURL)
+      const downloadURL = await getDownloadURL(snapshot.ref); 
       return downloadURL;
     } catch (error) {
       console.error("Error uploading image: ", error);

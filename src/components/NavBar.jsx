@@ -13,7 +13,7 @@ const DropdownMenu = () => {
   const handleLogOut = async () => {
     try {
       await LogOut();
-      navigagte('/')
+      navigagte('/login')
     } catch (error) {
       console.log('error logout:', error)
     }

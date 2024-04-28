@@ -15,16 +15,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { UseItem } from "../context/ItemContexProvier";
 
-const Card = ({ item, page }) => {
-
-  const [like, setLike] = useState(true);
+const Card = ({ item, page, isFavourites }) => {
+  const [like, setLike] = useState(isFavourites);
   const { user } = useAuth()
-  const {setItem} = UseItem()
- 
+  const { setItem } = UseItem()
   const navigate = useNavigate();
-
   const makefavourite = async (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     const userEmail = user?.email
     if (!userEmail) {
       toastMessage('error', 'Log in to access the services..')
@@ -35,17 +32,17 @@ const Card = ({ item, page }) => {
       setLike(!like);
 
       await updateDoc(userDoc, {
-        favProducts: like ? arrayUnion({ ...item }) : arrayRemove(item)
+        favProducts: !like ? arrayUnion({ ...item }) : arrayRemove(item)
       });
 
-      toastMessage(like ? 'success' : 'error', like ? 'Added to favourites..' : 'Removed from favourites..');
+      toastMessage(!like ? 'success' : 'error', !like ? 'Added to favourites..' : 'Removed from favourites..');
     } catch (error) {
       console.error("Failed to update document:", error);
     }
   }
 
-  const unlistfavourite = async (e,myad) => {
-    e.stopPropagation(); 
+  const unlistfavourite = async (e, myad) => {
+    e.stopPropagation();
     try {
       const userDoc = doc(db, 'users', user.email);
       await updateDoc(userDoc, {
@@ -57,8 +54,8 @@ const Card = ({ item, page }) => {
     }
   }
 
-  const removeAd = async (e,id) => {
-    e.stopPropagation(); 
+  const removeAd = async (e, id) => {
+    e.stopPropagation();
     try {
       await deleteDoc(doc(db, 'products', id));
       toastMessage('success', 'Your ad is removed')
@@ -92,13 +89,13 @@ const Card = ({ item, page }) => {
           </p>
 
           <div className="bg-white w-fit p-2 rounded-full absolute top-2 right-8 shadow-md">
-            {page == 'home' ? (<p onClick={(e)=>makefavourite(e)}>
+            {page == 'home' ? (<p onClick={(e) => makefavourite(e)}>
               {
-                !like && user ? (< IoIosHeart className="text-2xl" />) : (< BiHeart className="text-2xl" />)
+              !like ? (< BiHeart  className="text-2xl" />) : (< IoIosHeart className="text-2xl" />)
               }
 
             </p>) : (<p onClick={(e) => {
-              page === 'myads' ? removeAd(e,item.id) : unlistfavourite(e,item);
+              page === 'myads' ? removeAd(e, item.id) : unlistfavourite(e, item);
             }}>
               <AiOutlineClose className="text-xl" />
             </p>
