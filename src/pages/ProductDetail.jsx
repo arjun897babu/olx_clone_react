@@ -36,7 +36,7 @@ const ProductDetail = () => {
                     </div>
                 </div>
 
-                <div className="w-1/3 h-40 bg-white p-6 rounded-lg shadow">
+                <div className="w-1/3 h-44 bg-white p-6 rounded-lg shadow">
                     <div className="flex justify-between">
                         <span className="text-4xl font-semibold mr-4">₹{item?.price}</span>
                         <div>
@@ -54,7 +54,8 @@ const ProductDetail = () => {
                             </button>
                         </div>
                     </div>
-                    <p className=" mt-2 tex-sm font-thin">{item?.email}</p>
+                    <p className=" mt-2 tex-sm font-thin">seller : {item?.sellerName}</p>
+                    <p className=" mt-1 tex-sm font-thin  ">contact :<a  href={`tel:${item?.contact_number}`}>{item?.contact_number}</a></p>
                     <div className=" mt-2 flex justify-between">
                         <p className=" tex-sm font-thin">{item?.location}</p>
                         <p className=" tex-sm font-thin">{item?.createdAt && new Date(item.createdAt).toLocaleDateString('en-GB')}</p>

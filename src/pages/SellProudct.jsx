@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection } from 'firebase/firestore';
+import { getDoc, addDoc, doc, collection } from 'firebase/firestore';
 import { useAuth } from "../context/AuthContext";
 import { db } from "../services/firebase";
 import { useImageUpload } from "../context/ImageUploadContext";
@@ -28,6 +28,9 @@ const SellProduct = () => {
       return;
     }
     try {
+      const userdocRef = doc(db, 'users', user.email)
+      const docSnap = await getDoc(userdocRef);
+      const { sellerName, c_number } = docSnap.data();
       const docRef = await addDoc(collection(db, 'products'), {
         itemName,
         year,
@@ -35,14 +38,16 @@ const SellProduct = () => {
         location,
         url,
         userId: user.uid,
-        email:user.email,
-        createdAt: new Date().toISOString() 
+        email: user.email,
+        sellerName: sellerName,
+        contact_number: c_number,
+        createdAt: new Date().toISOString()
       });
-       
+
       alert('Product Added');
       setIsLoading(false);
       navigate('/myads')
-     
+
     } catch (error) {
       console.error('Error in product upload:', error);
       alert('Error adding product');
@@ -77,7 +82,7 @@ const SellProduct = () => {
           <input type="file" id="image" name="image" className="bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5" onChange={(e) => setImage(e.target.files[0])} />
         </div>
         <button type="submit" disabled={isLoading} className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-        {isLoading ? 'Posting...' : 'Post Ad'}
+          {isLoading ? 'Posting...' : 'Post Ad'}
         </button>
       </form>
     </>

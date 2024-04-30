@@ -23,18 +23,34 @@ export function AuthContextProvider({ children }) {
     })
 
     return () => unsubscribe();
- 
+
   }, [])
 
-  function SignUp(email, password) {
-    createUserWithEmailAndPassword(auth, email, password)
-    setDoc(doc(db,'users',email),{
-      favProducts:[],
-    })
-  } 
-  function LogIn(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+  async function SignUp(email, password, mobileNumber, userName) {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password)
+      await setDoc(doc(db, 'users', email), {
+        favProducts: [],
+        sellerName: userName,
+        c_number: mobileNumber
+      })
+      return
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+
   }
+
+  async function LogIn(email, password) {
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+      return
+    } catch (error) {
+      throw error
+    }
+  }
+
   function LogOut() {
     signOut(auth)
   }
